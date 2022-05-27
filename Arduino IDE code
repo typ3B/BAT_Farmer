@@ -1,109 +1,33 @@
-/* This code was developed by anythingbutasic for the atmega32u4 arduino micro/Leonardo.. Flash this code onto your microcontroller and put you mouse 
- *   curser over your main brave browser search bar. 5 secs after it should click the url search bar and start typing urls into you search box. Make 
- *   sure you have brave rewards enabled and a wallet setup. Its is unfortuanate that unless you become a brave certified creator you will have to
- *   use either uphold or Gemini to collect you reward through their exchange atm. This is a beta code ant not all of it will work for all OS. This
- *   code will be in further development as the developer figures out the limits on the brave browsers rewards. Note you are getting wBAT and not
- *   real BAT which is why you have to cliam these at an exchange or donate them. */
-
-#include <Mouse.h>
-#include "Keyboard.h"
-
-char *oxford[]={ "https://www.github.com", "https://www.google.com", "https://duckduckgo.com/",
-"https://www.ebay.com", "https://www.raspberrypi.com/", "http://www.bing.com",
-"https://canonical.com/", "https://www.theguardian.com/us", "https://www.wikihow.com/Main-Page",
-"https://www.arduino.cc/", "https://github.com/nzakas", "https://www.tradingview.com/", };
-
-
-
-long oxford1;
-
-const unsigned long eventInterval = 1800000;
-unsigned long previousTime = 1800000;
-
-void setup() {
-  // put your setup code here, to run once:
- Serial.begin(9600);
- Mouse.begin();
- randomSeed(286);
- Keyboard.begin();
+/* This code was developed by anythingbutasic for the atmega32u4 arduino micro/Leonardo.. Flash this code onto your microcontroller and go
+to your amazon account a start generating gift card codes.. from what I gather from trial and error Amazons only meas of protection is CAPTHA
+and logging your account out.. If you find and gift cards leave a comment on one of my videos at anythingbutasic on youtube.com.. >:) */
  
- //For Restart
- delay(5000); //4mins
+#include "Keyboard.h"
+char *actors[]={ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+"V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9",};
 
+long actor1;
+const int bttn = 4;
+
+void setup()
+{
+ Serial.begin(9600);
+ randomSeed(666);
+ Keyboard.begin();
+ pinMode(bttn, INPUT_PULLUP);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
- 
-// Right click mouse
- Mouse.press();
- delay(400);
- Mouse.release();
- delay(200);
-
-//Type out ULRs
- for (int i = 0; i < 1; i++){
- oxford1 = random(sizeof(oxford)/sizeof(char*));
- Serial.println(oxford[oxford1]);
- Keyboard.print(oxford[oxford1]);
- Keyboard.write(176);
- delay(10000);
+void loop()                    
+{
+  int buttonState;
+  buttonState = digitalRead(bttn);
+  if (buttonState == HIGH) {
+ Keyboard.write(65); //A
+ for (int i = 0; i < 13; i++){
+ actor1 = random(sizeof(actors)/sizeof(char*));
+ Serial.println(actors[actor1]);
+ Keyboard.print(actors[actor1]);
+ delay(2000);
  }
-
- //move mouse in a circle
- Mouse.move(50,0);delay(1000);         //movie in all four directions
- Mouse.move(0,50);delay(1000);
- Mouse.move(-50,0);delay(1000);
- Mouse.move(0,-50);delay(10000);
- delay(14000);
-  
-/*//page down up
- Keyboard.press(214);
- delay(300);
- Keyboard.releaseAll();
- delay(1000);
- Keyboard.press(211);
- delay(300);
- Keyboard.releaseAll();
- delay(12000);*/
-
-/*//Cloes Window!!
-//unsigned long currentTime = millis();
-//if ( currentTime >= eventInterval ) {
-static uint8_t tog=0;
-static uint32_t oldtime=millis();
-
-    if ( (millis()-oldtime) > 1800000) {
-       oldtime = millis();
-
-  Keyboard.press(128);
-  //delay(50);
-  Keyboard.press(129);
-  //delay(50);
-  Keyboard.press(119);
-  //delay(50);
-  Keyboard.releaseAll();
-  delay(100);
-  
-  //open browser in ubuntu
-  Keyboard.press(128);
-  //delay(50);
-  Keyboard.press(129);
-  //delay(50);
-  Keyboard.press(98);
-  //delay(50);
-  Keyboard.releaseAll();
-  delay(100);
-
-  //Maximize window!!
-  Keyboard.press(131);
-  //delay(50);
-  Keyboard.press(218);
-  //delay(50);
-  Keyboard.releaseAll();
-
  }
-  //if (eventInterval <= millis()){
-    //eventInterval + previousTime;
-*/  
 }
